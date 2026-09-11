@@ -1,0 +1,21 @@
+@LibraryManagementSystem_HostAddress = http://localhost:5093
+
+# GET {{LibraryManagementSystem_HostAddress}}/weatherforecast/
+# Accept: application/json
+### Search by title
+GET {{host}}/books/search?searchField=Title&text=clean
+
+### Search by author
+GET {{host}}/books/search?searchField=Author&text=Martin
+
+### Search by ISBN
+GET {{host}}/books/search?searchField=ISBN&text=9780132350884
+
+
+### Find a member by ID
+GET {{host}}/members/find?searchType=Id&term=1
+
+### Find a member by phone
+GET {{host}}/members/find?searchType=Phone&term=01712345678
+
+###

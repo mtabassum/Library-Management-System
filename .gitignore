@@ -1,0 +1,119 @@
+# ===============================================================
+# 1. .NET build output
+# ===============================================================
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+*.dll
+*.exe
+*.pdb
+
+
+# ===============================================================
+# 2. Publish output
+# ===============================================================
+publish/
+[Pp]ublish[Oo]utput/
+*.publishsettings
+*.pubxml.user
+*.azurePubxml
+
+
+# ===============================================================
+# 3. Visual Studio / Rider / VS Code
+# ===============================================================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.rsuser
+
+# Rider / ReSharper
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+# VS Code
+
+
+# ===============================================================
+# 4. NuGet
+# ===============================================================
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+
+# ===============================================================
+# 5. Local settings and secrets
+# ===============================================================
+appsettings.Local.json
+appsettings.*.Local.json
+*.local.json
+secrets.json
+appsettings.Development.json
+
+
+
+# ===============================================================
+# 6. Local database files (LocalDB / SQL Server Express)
+# ===============================================================
+*.mdf
+*.ldf
+*.ndf
+
+
+# Environment files — .env.example stays tracked as a template
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Uncomment if you ever build the client into the API's wwwroot
+# wwwroot/dist/
+
+
+# ===============================================================
+# 7. OS and editor junk
+# ===============================================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.swp
+*~
+
+
+# ===============================================================
+# 8. Misc
+# ===============================================================
+*.log
+*.cache
+*.bak
+*.tmp
+
+
+# ===============================================================
+# Deliberately NOT ignored 
+# ===============================================================
+# Migrations/            → EF migrations are source code. Program.cs runs
+#                          MigrateAsync() on startup, so the database cannot
+#                          be created without them.
+# package-lock.json      → locks exact frontend dependency versions.
+# *.sln / *.slnx / *.csproj → the project files themselves.
