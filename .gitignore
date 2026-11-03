@@ -1,6 +1,3 @@
-# ===============================================================
-# 1. .NET build output
-# ===============================================================
 [Bb]in/
 [Oo]bj/
 [Oo]ut/
@@ -18,9 +15,6 @@ x86/
 *.pdb
 
 
-# ===============================================================
-# 2. Publish output
-# ===============================================================
 publish/
 [Pp]ublish[Oo]utput/
 *.publishsettings
@@ -28,9 +22,6 @@ publish/
 *.azurePubxml
 
 
-# ===============================================================
-# 3. Visual Studio / Rider / VS Code
-# ===============================================================
 .vs/
 *.user
 *.suo
@@ -44,12 +35,10 @@ publish/
 _ReSharper*/
 *.DotSettings.user
 
-# VS Code
+.vscode/
 
 
-# ===============================================================
-# 4. NuGet
-# ===============================================================
+
 *.nupkg
 *.snupkg
 packages/
@@ -59,24 +48,37 @@ project.lock.json
 project.fragment.lock.json
 
 
-# ===============================================================
-# 5. Local settings and secrets
-# ===============================================================
+
+# User Secrets already live outside the repo, so nothing to ignore there.
+# These patterns are for local-only overrides you keep beside the real config.
 appsettings.Local.json
 appsettings.*.Local.json
 *.local.json
 secrets.json
-appsettings.Development.json
+
+appsettings.Development.json 
 
 
 
-# ===============================================================
-# 6. Local database files (LocalDB / SQL Server Express)
-# ===============================================================
 *.mdf
 *.ldf
 *.ndf
 
+
+
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.tsbuildinfo
+.eslintcache
+
+# npm / yarn / pnpm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Environment files — .env.example stays tracked as a template
 .env
@@ -88,9 +90,7 @@ appsettings.Development.json
 # wwwroot/dist/
 
 
-# ===============================================================
-# 7. OS and editor junk
-# ===============================================================
+
 .DS_Store
 Thumbs.db
 ehthumbs.db
@@ -100,18 +100,13 @@ $RECYCLE.BIN/
 *~
 
 
-# ===============================================================
-# 8. Misc
-# ===============================================================
+
 *.log
 *.cache
 *.bak
 *.tmp
 
 
-# ===============================================================
-# Deliberately NOT ignored 
-# ===============================================================
 # Migrations/            → EF migrations are source code. Program.cs runs
 #                          MigrateAsync() on startup, so the database cannot
 #                          be created without them.

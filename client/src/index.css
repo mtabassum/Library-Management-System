@@ -1,0 +1,66 @@
+:root {
+  /* warm-neutral light content */
+  --bg: #f7f4f2;
+  --surface: #ffffff;
+  --surface-2: #faf7f5;
+  --ink: #1c1f24; /* graphite */
+  --muted: #63666e;
+  --subtle: #9a9ca4;
+  --line: #e8e3de;
+  --line-strong: #d9d3cc;
+
+  /* graphite sidebar */
+  --side: #1c1f24;
+  --side-2: #262b31;
+  --side-ink: #9ba0aa;
+  --side-ink-strong: #ffffff;
+  --side-active-bg: #2e343c;
+  --side-active-ink: #ebb1a0; /* clay-rose tint on dark */
+  --side-line: #2c3138;
+
+  /* clay-rose accent */
+  --accent: #c07257; /* identity: brand, active bar, badge accents */
+  --accent-strong: #a85c44; /* fill behind text (buttons, avatar) — white stays legible */
+  --accent-deeper: #8f4a35; /* button hover */
+  --accent-050: #f6e7e0; /* soft accent background */
+  --accent-ink: #9a4d36; /* accent text on light (badges, active segment) */
+  --on-accent: #ffffff; /* text on a filled accent */
+
+  --radius: 12px;
+  --radius-sm: 9px;
+  --shadow: 0 1px 2px rgba(28, 31, 36, 0.05), 0 6px 20px rgba(28, 31, 36, 0.06);
+
+  --font-serif:
+    "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --font-sans:
+    system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font-family: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
