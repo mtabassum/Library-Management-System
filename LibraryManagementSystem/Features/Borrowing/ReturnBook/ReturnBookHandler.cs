@@ -25,12 +25,12 @@ namespace LibraryManagementSystem.Features.Borrowing.ReturnBook
         {
             var copy = await _copies.GetByIdAsync(command.BookCopyId, cancellationToken);
             if (copy is null)
-                return Result.Failure<ReturnBookResult>("BookCopyNotFound");
+                return Result.Failure<ReturnBookResult>(BorrowingErrors.CopyNotFound(command.BookCopyId));
 
             var record = await _borrowRecords.GetActiveByCopyIdAsync(
                 command.BookCopyId, cancellationToken);
             if (record is null)
-                return Result.Failure<ReturnBookResult>("NoActiveBorrowing");
+                return Result.Failure<ReturnBookResult>(BorrowingErrors.NoActiveLoanForCopy(copy.CopyCode));
 
             record.Return(DateTime.UtcNow);
             copy.MarkAsAvailable();

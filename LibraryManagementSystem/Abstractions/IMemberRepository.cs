@@ -8,7 +8,8 @@ namespace LibraryManagementSystem.Abstractions
     {
         Task<Member?> GetByIdAsync(int id, CancellationToken cancellationToken);
         void Add(Member member);
-        Task<IReadOnlyList<FindMembersResult.MemberItem>> FindAsync(MemberSearchType searchType, string term, CancellationToken cancellationToken);
+        Task<(IReadOnlyList<FindMembersResult.MemberItem> Items, int Total)> FindAsync(
+        MemberSearchType searchType, string term, int skip, int take,CancellationToken cancellationToken);
 
         Task<int> CountAsync(CancellationToken cancellationToken);
 

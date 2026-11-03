@@ -2,6 +2,6 @@
     public sealed record GetDashboardResult(
         int TotalBooks,       
         int AvailableCopies, 
-        int OnLoan,     
+        int BorrowedCopies,     
         int MemberCount);     
 

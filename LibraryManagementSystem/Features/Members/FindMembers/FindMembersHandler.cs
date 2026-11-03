@@ -7,6 +7,7 @@ namespace LibraryManagementSystem.Features.Members.FindMembers;
 public sealed class FindMembersHandler
     : IRequestHandler<FindMembersQuery, FindMembersResult>
 {
+    public const int PageSize = 25;
     private readonly IMemberRepository _members;
 
     public FindMembersHandler(IMemberRepository members) => _members = members;
@@ -15,10 +16,16 @@ public sealed class FindMembersHandler
         FindMembersQuery query,
         CancellationToken cancellationToken)
     {
-        var matches = await _members.FindAsync(
-            query.SearchType, query.Term, cancellationToken);
+        var page = Math.Max(0, query.Page);
 
-        return new FindMembersResult(matches);
+        var (items, total) = await _members.FindAsync(
+            query.SearchType,
+            query.Term.Trim(),
+            page * PageSize,
+            PageSize,
+            cancellationToken);
+
+        return new FindMembersResult(items, total, (page + 1) * PageSize < total);
     }
 }
 

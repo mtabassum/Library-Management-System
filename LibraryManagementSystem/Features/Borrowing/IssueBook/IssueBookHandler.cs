@@ -33,27 +33,27 @@ public sealed class IssueBookHandler
     {
         var copy = await _bookCopies.GetByIdAsync(command.BookCopyId, cancellationToken);
         if (copy is null)
-            return Result.Failure<IssueBookResult>("BookCopyNotFound");
+            return Result.Failure<IssueBookResult>(BorrowingErrors.CopyNotFound(command.BookCopyId));
 
         var member = await _members.GetByIdAsync(command.MemberId, cancellationToken);
         if (member is null)
-            return Result.Failure<IssueBookResult>("MemberNotFound");
+            return Result.Failure<IssueBookResult>(BorrowingErrors.MemberNotFound(command.MemberId));
 
         if (!member.IsActive)
-            return Result.Failure<IssueBookResult>("MemberNotActive");
+            return Result.Failure<IssueBookResult>(BorrowingErrors.MemberInactive(member.MemberCode));
 
         var activeBorrows = await _borrowRecords.CountActiveByMemberAsync(member.Id, cancellationToken);
         if (activeBorrows >= BorrowLimit)
-            return Result.Failure<IssueBookResult>("MemberBorrowLimitReached");
+            return Result.Failure<IssueBookResult>(BorrowingErrors.BorrowLimitReached());
 
         if (!copy.IsAvailable)
-            return Result.Failure<IssueBookResult>("BookCopyUnavailable");
+            return Result.Failure<IssueBookResult>(BorrowingErrors.CopyUnavailable(copy.CopyCode));
 
         var issueDate = DateTime.UtcNow;
         var dueDate = command.DueDate ?? issueDate.AddDays(DefaultLoanDays);
 
         if (dueDate <= issueDate)
-            return Result.Failure<IssueBookResult>("DueDateNotAfterIssueDate");
+            return Result.Failure<IssueBookResult>(BorrowingErrors.DueDateNotAfterIssueDate());
 
         copy.MarkAsBorrowed(); 
 

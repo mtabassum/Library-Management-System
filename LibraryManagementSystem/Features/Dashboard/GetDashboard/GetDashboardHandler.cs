@@ -28,11 +28,11 @@ public sealed class GetDashboardHandler
         var totalBooks = await _books.CountAsync(cancellationToken);
         var availableCopies = await _copies.CountByStatusAsync(
             BookCopyStatus.Available, cancellationToken);
-        var onLoan = await _copies.CountByStatusAsync(
+        var borrowedCopies = await _copies.CountByStatusAsync(
             BookCopyStatus.Borrowed, cancellationToken);
         var memberCount = await _members.CountAsync(cancellationToken);
 
-        return new GetDashboardResult(totalBooks, availableCopies, onLoan, memberCount);
+        return new GetDashboardResult(totalBooks, availableCopies, borrowedCopies, memberCount);
     }
 }
 

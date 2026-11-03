@@ -11,7 +11,8 @@ namespace LibraryManagementSystem.Features.Books
         private readonly ISender _mediator;
         public BooksController(ISender mediator) => _mediator = mediator;
 
-        // GET /books/search?searchField=Title&text=clean
+        // GET /books/search?searchField=Title&text=clean   → matching books
+        // GET /books/search?searchField=Title              → every book
         [HttpGet("search")]
         public async Task<IActionResult> Search(
             [FromQuery] SearchBooksQuery query, CancellationToken cancellationToken)
@@ -19,6 +20,5 @@ namespace LibraryManagementSystem.Features.Books
             var result = await _mediator.Send(query, cancellationToken);
             return Ok(result);
         }
-
     }
 }

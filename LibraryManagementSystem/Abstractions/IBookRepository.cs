@@ -6,7 +6,7 @@ namespace LibraryManagementSystem.Abstractions
     public interface IBookRepository
     {
      Task<IReadOnlyList<SearchBooksResult.Item>> SearchAsync(
-      BookSearchField searchField, string text, CancellationToken cancellationToken);
+      BookSearchField searchField, string? text, CancellationToken cancellationToken);
 
      Task<int> CountAsync(CancellationToken cancellationToken);
 

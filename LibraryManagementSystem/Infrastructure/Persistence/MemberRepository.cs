@@ -15,27 +15,37 @@ namespace LibraryManagementSystem.Infrastructure.Persistence
             _db.Members.FirstOrDefaultAsync(m => m.Id == id, cancellationToken);
 
         public void Add(Member member) => _db.Members.Add(member);
-        public async Task<IReadOnlyList<FindMembersResult.MemberItem>> FindAsync(
-        MemberSearchType searchType, string term, CancellationToken cancellationToken)
+        public async Task<(IReadOnlyList<FindMembersResult.MemberItem> Items, int Total)> FindAsync(
+        MemberSearchType searchType, string term, int skip,int take, CancellationToken cancellationToken)
         {
-            var members = _db.Members.AsNoTracking();
+            var query = Filter(_db.Members.AsNoTracking(), searchType, term);
 
-            IQueryable<Member> matches = searchType switch
-            {
-                MemberSearchType.Id when int.TryParse(term, out var id)
-                    => members.Where(m => m.Id == id),
-                MemberSearchType.Code                                    
-    => members.Where(m => m.MemberCode == term),
-                MemberSearchType.Phone
-                    => members.Where(m => m.Phone == term),
-                _ => members.Where(_ => false)
-            };
+            var total = await query.CountAsync(cancellationToken);
 
-            return await matches
+            var items = await query
+                .OrderBy(m => m.Name)
+                .ThenBy(m => m.Id)         
+                .Skip(skip)
+                .Take(take)
                 .Select(m => new FindMembersResult.MemberItem(
-                    m.Id,m.MemberCode, m.Name, m.Phone, m.Address, m.Status))
+                    m.Id, m.MemberCode, m.Name, m.Phone, m.Address, m.Status))
                 .ToListAsync(cancellationToken);
+
+            return (items, total);
         }
+
+        private static IQueryable<Member> Filter(
+    IQueryable<Member> members, MemberSearchType searchType, string term) =>
+    searchType switch
+    {
+        MemberSearchType.Id => int.TryParse(term, out var id)
+            ? members.Where(m => m.Id == id)
+            : members.Where(m => false),
+        MemberSearchType.Code => members.Where(m => m.MemberCode.Contains(term)),
+        MemberSearchType.Phone => members.Where(m => m.Phone.Contains(term)),
+        MemberSearchType.Name => members.Where(m => m.Name.Contains(term)),
+        _ => throw new ArgumentOutOfRangeException(nameof(searchType))
+    };
 
         public Task<int> CountAsync(CancellationToken cancellationToken) =>
     _db.Members.CountAsync(cancellationToken);

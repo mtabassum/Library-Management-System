@@ -18,10 +18,11 @@ public sealed class MembersController : ControllerBase
     public async Task<IActionResult> Find(
         [FromQuery] MemberSearchType searchType,
         [FromQuery] string term,
-        CancellationToken cancellationToken)
+        [FromQuery] int page = 0,        
+    CancellationToken cancellationToken = default)
     {
         var result = await _mediator.Send(
-            new FindMembersQuery(searchType, term), cancellationToken);
+            new FindMembersQuery(searchType, term, page), cancellationToken);
 
         return Ok(result);
     }

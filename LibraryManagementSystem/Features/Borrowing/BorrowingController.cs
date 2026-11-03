@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+﻿using LibraryManagementSystem.Extensions;
+using LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
 using LibraryManagementSystem.Features.Borrowing.IssueBook;
 using LibraryManagementSystem.Features.Borrowing.ReturnBook;
 using MediatR;
@@ -19,9 +20,7 @@ public sealed class BorrowingController : ControllerBase
     public async Task<IActionResult> Issue(IssueBookCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        return result.IsSuccess
-            ? Ok(result.Value)
-            : BadRequest(new { error = result.Error });
+        return result.ToActionResult();
     }
 
     // GET /borrowing/active?field=CopyCode&term=BC-0001-01
@@ -39,8 +38,6 @@ public sealed class BorrowingController : ControllerBase
         ReturnBookCommand command, CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(command, cancellationToken);
-        return result.IsSuccess
-            ? Ok(result.Value)
-            : BadRequest(new { error = result.Error });
+        return result.ToActionResult();
     }
 }
