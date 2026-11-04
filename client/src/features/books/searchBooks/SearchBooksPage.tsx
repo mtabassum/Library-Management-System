@@ -397,7 +397,7 @@ function CopyRow({
               : `Open ${copy.borrowerName}'s profile`
           }
         >
-          Details
+          View Member
         </button>
       )}
     </div>

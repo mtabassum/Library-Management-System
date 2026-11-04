@@ -5,6 +5,7 @@ import {
   IssueIcon,
   ReturnIcon,
   MembersIcon,
+  BooksIcon,
 } from "./icons";
 import styles from "./AppLayout.module.css";
 
@@ -52,10 +53,9 @@ export default function AppLayout() {
           <NavLink to="/members" className={navClass}>
             <MembersIcon /> Member Details
           </NavLink>
-
-          {/* <span className={`${styles.navItem} ${styles.disabled}`}>
-            <MembersIcon /> Members <em className={styles.soon}>soon</em>
-          </span> */}
+          <NavLink to="/books" className={navClass}>
+            <BooksIcon /> Book Details
+          </NavLink>
         </nav>
 
         <div className={styles.account}>
