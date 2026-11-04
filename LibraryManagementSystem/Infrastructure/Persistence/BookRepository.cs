@@ -1,5 +1,7 @@
 ﻿using LibraryManagementSystem.Abstractions;
 using LibraryManagementSystem.Domain;
+using LibraryManagementSystem.Features.Books.FindBooks;
+using LibraryManagementSystem.Features.Books.GetBookDetails;
 using LibraryManagementSystem.Features.Books.SearchBooks;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,5 +61,45 @@ namespace LibraryManagementSystem.Infrastructure.Persistence;
         }
         public Task<int> CountAsync(CancellationToken cancellationToken) =>
          _db.Books.CountAsync(cancellationToken);
+
+        public async Task<(IReadOnlyList<FindBooksResult.BookItem> Items, int Total)> FindAsync(
+        BookSearchField searchField, string term, int skip, int take, CancellationToken cancellationToken)
+    {
+        var books = searchField switch
+        {
+            BookSearchField.Title => _db.Books.AsNoTracking().Where(b => b.Title.Contains(term)),
+            BookSearchField.Author => _db.Books.AsNoTracking().Where(b => b.Author.Contains(term)),
+            BookSearchField.ISBN => _db.Books.AsNoTracking().Where(b => b.Isbn.Contains(term)),
+            _ => _db.Books.AsNoTracking().Where(b => false)
+        };
+
+        var total = await books.CountAsync(cancellationToken);
+
+        var items = await books
+            .OrderBy(b => b.Title)
+            .ThenBy(b => b.BookId)       
+            .Skip(skip)
+            .Take(take)
+            .Select(b => new FindBooksResult.BookItem(
+                b.BookId,
+                b.Title,
+                b.Author,
+                b.Isbn,
+                _db.BookCopies.Count(c => c.BookId == b.BookId),
+                _db.BookCopies.Count(c => c.BookId == b.BookId
+                                       && c.Status == BookCopyStatus.Available)))
+            .ToListAsync(cancellationToken);
+
+        return (items, total);
     }
+
+    public Task<GetBookDetailsResult.BookInfo?> GetInfoAsync(
+        int bookId, CancellationToken cancellationToken) =>
+        _db.Books
+            .AsNoTracking()
+            .Where(b => b.BookId == bookId)
+            .Select(b => new GetBookDetailsResult.BookInfo(
+                b.BookId, b.Title, b.Author, b.Isbn, b.Category, b.Publisher))
+            .FirstOrDefaultAsync(cancellationToken);
+}
 

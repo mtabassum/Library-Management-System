@@ -1,4 +1,5 @@
 ﻿using LibraryManagementSystem.Domain;
+using LibraryManagementSystem.Features.Books.GetBookDetails;
 
 namespace LibraryManagementSystem.Abstractions
 {
@@ -7,5 +8,8 @@ namespace LibraryManagementSystem.Abstractions
         Task<BookCopy?> GetByIdAsync(int id, CancellationToken cancellationToken);
 
         Task<int> CountByStatusAsync(BookCopyStatus status, CancellationToken cancellationToken);
+
+        Task<IReadOnlyList<BookCopyRow>> GetCopiesForBookAsync(
+        int bookId, CancellationToken cancellationToken);
     }
 }
