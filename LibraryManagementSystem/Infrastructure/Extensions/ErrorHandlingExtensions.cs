@@ -35,8 +35,8 @@ namespace LibraryManagementSystem.Extensions
         /// </summary>
         public static WebApplication UseErrorHandling(this WebApplication app)
         {
-            app.UseExceptionHandler();
             app.UseMiddleware<CorrelationIdMiddleware>();
+            app.UseExceptionHandler();
 
             return app;
         }

@@ -6,9 +6,15 @@ using LibraryManagementSystem.Infrastructure.Middleware;
 using LibraryManagementSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using Serilog;
 
 
+try { 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSerilog((services, configuration) => configuration
+    .ReadFrom.Configuration(builder.Configuration)
+    .ReadFrom.Services(services));
 
 builder.Services.AddControllers();
 
@@ -39,6 +45,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseErrorHandling();
 
+app.UseSerilogRequestLogging();
+
 app.UseCors();
 
 if (app.Environment.IsDevelopment())
@@ -55,3 +63,14 @@ app.MapControllers();
 await app.MigrateAndSeedAsync();
 
 app.Run();
+
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly.");
+    throw;
+}
+finally
+{
+    Log.CloseAndFlush();
+}

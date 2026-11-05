@@ -49,14 +49,11 @@ project.fragment.lock.json
 
 
 
-# User Secrets already live outside the repo, so nothing to ignore there.
-# These patterns are for local-only overrides you keep beside the real config.
 appsettings.Local.json
 appsettings.*.Local.json
 *.local.json
 secrets.json
 
-appsettings.Development.json 
 
 
 
@@ -106,9 +103,12 @@ $RECYCLE.BIN/
 *.bak
 *.tmp
 
+# Serilog output — rolling files, never committed
+Logs/
 
 # Migrations/            → EF migrations are source code. Program.cs runs
 #                          MigrateAsync() on startup, so the database cannot
 #                          be created without them.
 # package-lock.json      → locks exact frontend dependency versions.
 # *.sln / *.slnx / *.csproj → the project files themselves.
+/README.md

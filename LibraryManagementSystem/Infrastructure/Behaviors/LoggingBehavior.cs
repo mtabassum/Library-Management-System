@@ -30,8 +30,7 @@ namespace LibraryManagementSystem.Infrastructure.Behaviors
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            // Only the type name is logged. The request object itself may carry
-            // a phone number or address, which does not belong in a log file.
+            // Only the type name is logged. 
             var requestName = typeof(TRequest).Name;
 
             using (_logger.BeginScope(
