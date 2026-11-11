@@ -9,7 +9,6 @@ using Scalar.AspNetCore;
 using Serilog;
 
 
-try { 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSerilog((services, configuration) => configuration
@@ -37,15 +36,9 @@ builder.Services.AddErrorHandling();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseRequestTiming();    
-}
-
 
 app.UseErrorHandling();
 
-app.UseSerilogRequestLogging();
 
 app.UseCors();
 
@@ -64,13 +57,3 @@ await app.MigrateAndSeedAsync();
 
 app.Run();
 
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application terminated unexpectedly.");
-    throw;
-}
-finally
-{
-    Log.CloseAndFlush();
-}

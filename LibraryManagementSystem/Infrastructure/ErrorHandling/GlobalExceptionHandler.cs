@@ -49,9 +49,6 @@ namespace LibraryManagementSystem.Infrastructure.ErrorHandling;
                 httpContext.Request.Path,
                 correlationId);
 
-            if (httpContext.Response.HasStarted)
-                return true;
-
             var problem = new ProblemDetails
             {
                 Status = StatusCodes.Status500InternalServerError,
@@ -84,9 +81,6 @@ namespace LibraryManagementSystem.Infrastructure.ErrorHandling;
                 httpContext.Request.Method,
                 httpContext.Request.Path,
                 correlationId);
-
-            if (httpContext.Response.HasStarted)
-                return true;
 
             // ValidationProblemDetails fills in its own Title and puts the
             // failures under "errors", keyed by property name, so the client can

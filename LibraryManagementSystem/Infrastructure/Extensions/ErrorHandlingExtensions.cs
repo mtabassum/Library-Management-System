@@ -1,5 +1,6 @@
 using LibraryManagementSystem.Infrastructure.ErrorHandling;
 using LibraryManagementSystem.Infrastructure.Middleware;
+using Serilog;
 
 namespace LibraryManagementSystem.Extensions
 {
@@ -22,13 +23,19 @@ namespace LibraryManagementSystem.Extensions
         }
 
         /// <summary>
-        /// Order matters, and keeping both lines in one method is the reason
+        /// Order matters, and keeping these lines in one method is the reason
         /// this exists:
         ///
-        ///   UseExceptionHandler is outermost so it also catches failures
-        ///   inside the correlation middleware. The correlation id is still
-        ///   available when a controller throws, because HttpContext.Items was
-        ///   populated on the way in.
+        ///   1. CorrelationIdMiddleware is outermost, so every log line and
+        ///      every response carries the correlation id, including errors.
+        ///
+        ///   2. Request logging comes next. It sits outside the exception
+        ///      handler, so it only sees the finished response (for example
+        ///      a 500) and writes one short line, without the stack trace.
+        ///
+        ///   3. UseExceptionHandler is innermost. It catches anything a
+        ///      controller or handler throws, and GlobalExceptionHandler
+        ///      logs the stack trace once.
         ///
         /// Call this FIRST, immediately after builder.Build(). Middleware
         /// registered above it is not covered.
@@ -36,6 +43,7 @@ namespace LibraryManagementSystem.Extensions
         public static WebApplication UseErrorHandling(this WebApplication app)
         {
             app.UseMiddleware<CorrelationIdMiddleware>();
+            app.UseSerilogRequestLogging();
             app.UseExceptionHandler();
 
             return app;

@@ -1,3 +1,5 @@
+using LibraryManagementSystem.Abstractions.Validation;
+using LibraryManagementSystem.Features.Borrowing.IssueBook;
 using LibraryManagementSystem.Infrastructure.Behaviors;
 
 namespace LibraryManagementSystem.Extensions
@@ -18,6 +20,7 @@ namespace LibraryManagementSystem.Extensions
                 cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
                 cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
+            services.AddScoped<IValidator<IssueBookCommand>, IssueBookCommandValidator>();
 
             return services;
         }
