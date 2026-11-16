@@ -1,4 +1,4 @@
-namespace LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+namespace LibraryManagementSystem.Features.Borrowing.FindActiveBorrowings;
 
 // How the librarian is looking up the loan to return.
 //   CopyCode -> one physical copy, so at most one active loan.

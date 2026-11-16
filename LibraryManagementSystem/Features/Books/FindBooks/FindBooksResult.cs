@@ -10,6 +10,7 @@ public sealed record FindBooksResult(
 {
     // Only what the pick list shows. A book with no copies is included, with
     // both counts at 0 -- that is the point of starting from Books.
+
     public sealed record BookItem(
         int BookId,
         string Title,

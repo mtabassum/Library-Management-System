@@ -1,4 +1,4 @@
-namespace LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+namespace LibraryManagementSystem.Features.Borrowing.FindActiveBorrowings;
 
 // One row per active loan. Everything the Return screen shows before the
 // librarian confirms, plus CopyId, which the return command uses to name the

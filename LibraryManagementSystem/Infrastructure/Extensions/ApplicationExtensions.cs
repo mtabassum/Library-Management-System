@@ -1,5 +1,6 @@
 using LibraryManagementSystem.Abstractions.Validation;
 using LibraryManagementSystem.Features.Borrowing.IssueBook;
+using LibraryManagementSystem.Features.Members.FindMembers;
 using LibraryManagementSystem.Infrastructure.Behaviors;
 
 namespace LibraryManagementSystem.Extensions
@@ -21,6 +22,7 @@ namespace LibraryManagementSystem.Extensions
                 cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
             services.AddScoped<IValidator<IssueBookCommand>, IssueBookCommandValidator>();
+            services.AddScoped<IValidator<FindMembersQuery>, FindMembersQueryValidator>();
 
             return services;
         }

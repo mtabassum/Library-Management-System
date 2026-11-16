@@ -1,7 +1,8 @@
-﻿using MediatR;
+﻿using LibraryManagementSystem.Extensions;
 using LibraryManagementSystem.Features.Books.FindBooks;
 using LibraryManagementSystem.Features.Books.GetBookDetails;
 using LibraryManagementSystem.Features.Books.SearchBooks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementSystem.Features.Books
@@ -41,9 +42,7 @@ namespace LibraryManagementSystem.Features.Books
         {
             var result = await _mediator.Send(new GetBookDetailsQuery(bookId), cancellationToken);
 
-            return result is not null
-                ? Ok(result)
-                : NotFound(new { error = "BookNotFound" });
+            return result.ToActionResult();
         }
     }
 }

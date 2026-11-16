@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+namespace LibraryManagementSystem.Features.Borrowing.FindActiveBorrowings;
 
 // A Query, not a Command: it reads what is currently on loan and changes
 // nothing. The librarian must see the borrower and dates before confirming,

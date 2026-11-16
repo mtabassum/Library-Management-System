@@ -1,4 +1,5 @@
-﻿using LibraryManagementSystem.Features.Members.FindMembers;
+﻿using LibraryManagementSystem.Extensions;
+using LibraryManagementSystem.Features.Members.FindMembers;
 using LibraryManagementSystem.Features.Members.GetMemberDetails;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -33,8 +34,6 @@ public sealed class MembersController : ControllerBase
     {
         var result = await _mediator.Send(new GetMemberDetailsQuery(memberId), cancellationToken);
 
-        return result is not null
-            ? Ok(result)
-            : NotFound(new { error = "MemberNotFound" });
+        return result.ToActionResult();
     }
 }

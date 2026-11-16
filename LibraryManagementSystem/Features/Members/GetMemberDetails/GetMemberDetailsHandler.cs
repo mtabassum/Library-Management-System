@@ -8,7 +8,7 @@ namespace LibraryManagementSystem.Features.Members.GetMemberDetails;
 // than read from BorrowStatus, so the screen stays correct whether or not a
 // record is ever transitioned to an overdue state later.
 public sealed class GetMemberDetailsHandler
-    : IRequestHandler<GetMemberDetailsQuery, GetMemberDetailsResult?>
+    : IRequestHandler<GetMemberDetailsQuery, Result<GetMemberDetailsResult>>
 {
     private readonly IMemberRepository _members;
     private readonly IBorrowRecordRepository _borrowRecords;
@@ -21,13 +21,13 @@ public sealed class GetMemberDetailsHandler
         _borrowRecords = borrowRecords;
     }
 
-    public async Task<GetMemberDetailsResult?> Handle(
+    public async Task<Result<GetMemberDetailsResult>> Handle(
         GetMemberDetailsQuery query,
         CancellationToken cancellationToken)
     {
         var profile = await _members.GetProfileAsync(query.MemberId, cancellationToken);
         if (profile is null)
-            return null;
+            return Result.Failure<GetMemberDetailsResult>(MemberErrors.MemberNotFound(query.MemberId));
 
         var borrowings = await _borrowRecords.GetBorrowingsForMemberAsync(
             query.MemberId, cancellationToken);
@@ -73,6 +73,6 @@ public sealed class GetMemberDetailsHandler
             Overdue: currentlyBorrowed.Count(borrowing => borrowing.IsOverdue),
             TotalBorrowed: borrowings.Count);
 
-        return new GetMemberDetailsResult(profile, summary, currentlyBorrowed, history);
+        return Result.Success(new GetMemberDetailsResult(profile, summary, currentlyBorrowed, history));
     }
 }

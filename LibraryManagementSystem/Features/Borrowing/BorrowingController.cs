@@ -1,5 +1,5 @@
 ﻿using LibraryManagementSystem.Extensions;
-using LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+using LibraryManagementSystem.Features.Borrowing.FindActiveBorrowings;
 using LibraryManagementSystem.Features.Borrowing.IssueBook;
 using LibraryManagementSystem.Features.Borrowing.ReturnBook;
 using MediatR;

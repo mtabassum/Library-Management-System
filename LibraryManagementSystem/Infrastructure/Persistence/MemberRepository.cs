@@ -35,9 +35,9 @@ namespace LibraryManagementSystem.Infrastructure.Persistence
         }
 
         private static IQueryable<Member> Filter(
-    IQueryable<Member> members, MemberSearchType searchType, string term) =>
-    searchType switch
-    {
+         IQueryable<Member> members, MemberSearchType searchType, string term) =>
+        searchType switch
+        {
         MemberSearchType.Id => int.TryParse(term, out var id)
             ? members.Where(m => m.Id == id)
             : members.Where(m => false),
@@ -45,15 +45,15 @@ namespace LibraryManagementSystem.Infrastructure.Persistence
         MemberSearchType.Phone => members.Where(m => m.Phone.Contains(term)),
         MemberSearchType.Name => members.Where(m => m.Name.Contains(term)),
         _ => throw new ArgumentOutOfRangeException(nameof(searchType))
-    };
+        };
 
         public Task<int> CountAsync(CancellationToken cancellationToken) =>
-    _db.Members.CountAsync(cancellationToken);
+        _db.Members.CountAsync(cancellationToken);
 
         public Task<GetMemberDetailsResult.Profile?> GetProfileAsync(
-    int memberId,
-    CancellationToken cancellationToken) =>
-    _db.Members
+        int memberId,
+        CancellationToken cancellationToken) =>
+        _db.Members
         .AsNoTracking()
         .Where(m => m.Id == memberId)
         .Select(m => new GetMemberDetailsResult.Profile(

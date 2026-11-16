@@ -1,5 +1,5 @@
 ﻿using LibraryManagementSystem.Domain;
-using LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+using LibraryManagementSystem.Features.Borrowing.FindActiveBorrowings;
 using LibraryManagementSystem.Features.Members.GetMemberDetails;
 
 namespace LibraryManagementSystem.Abstractions

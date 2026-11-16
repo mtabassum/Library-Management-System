@@ -3,11 +3,8 @@ using LibraryManagementSystem.Domain;
 using MediatR;
 
 namespace LibraryManagementSystem.Features.Books.GetBookDetails;
-
-// Loads the book, then every copy of it, and works out the availability summary
-// from that one list. Nothing here changes state -- it is a read.
 public sealed class GetBookDetailsHandler
-    : IRequestHandler<GetBookDetailsQuery, GetBookDetailsResult?>
+    : IRequestHandler<GetBookDetailsQuery, Result<GetBookDetailsResult>>
 {
     private readonly IBookRepository _books;
     private readonly IBookCopyRepository _copies;
@@ -20,13 +17,13 @@ public sealed class GetBookDetailsHandler
         _copies = copies;
     }
 
-    public async Task<GetBookDetailsResult?> Handle(
-        GetBookDetailsQuery query,
+    public async Task<Result<GetBookDetailsResult>> Handle(
+       GetBookDetailsQuery query,
         CancellationToken cancellationToken)
     {
         var book = await _books.GetInfoAsync(query.BookId, cancellationToken);
         if (book is null)
-            return null;
+            return Result.Failure<GetBookDetailsResult>(BookErrors.BookNotFound(query.BookId));
 
         var copies = await _copies.GetCopiesForBookAsync(query.BookId, cancellationToken);
 
@@ -66,6 +63,6 @@ public sealed class GetBookDetailsHandler
                 copy.DueDate))
             .ToList();
 
-        return new GetBookDetailsResult(book, summary, items);
+        return Result.Success(new GetBookDetailsResult(book, summary, items));
     }
 }

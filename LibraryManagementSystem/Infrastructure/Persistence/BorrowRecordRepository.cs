@@ -1,6 +1,6 @@
 ﻿using LibraryManagementSystem.Abstractions;
 using LibraryManagementSystem.Domain;
-using LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+using LibraryManagementSystem.Features.Borrowing.FindActiveBorrowings;
 using LibraryManagementSystem.Features.Members.GetMemberDetails;
 using Microsoft.EntityFrameworkCore;
 

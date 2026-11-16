@@ -1,8 +1,3 @@
-// NOTE: written without sight of the current Program.cs. The DbContext and
-// migration/seed calls match what the project is known to do; the repository
-// registrations are PLACEHOLDERS -- replace them with the exact lines from
-// Program.cs.
-
 using LibraryManagementSystem.Abstractions;
 using LibraryManagementSystem.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

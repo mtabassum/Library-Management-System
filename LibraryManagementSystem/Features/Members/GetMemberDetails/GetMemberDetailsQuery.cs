@@ -1,3 +1,4 @@
+using LibraryManagementSystem.Abstractions;
 using MediatR;
 
 namespace LibraryManagementSystem.Features.Members.GetMemberDetails;
@@ -8,4 +9,4 @@ namespace LibraryManagementSystem.Features.Members.GetMemberDetails;
 /// failure and the controller maps a null response to 404.
 /// </summary>
 public sealed record GetMemberDetailsQuery(int MemberId)
-    : IRequest<GetMemberDetailsResult?>;
+    : IRequest<Result<GetMemberDetailsResult>>;

@@ -1,7 +1,7 @@
 using MediatR;
 using LibraryManagementSystem.Abstractions;
 
-namespace LibraryManagementSystem.Features.Borrowing.FindActiveLoans;
+namespace LibraryManagementSystem.Features.Borrowing.FindActiveBorrowings;
 
 public sealed class FindActiveBorrowingsHandler
     : IRequestHandler<FindActiveBorrowingsQuery, FindActiveBorrowingsResult>
